@@ -214,13 +214,20 @@ function GameConsole({ userId, userName }: GameConsoleProps) {
         })
         .then(() => {
           void queryClient.invalidateQueries({ queryKey: gameKeys.fog(activeMap.id) });
+          const name =
+            characters.data?.find((c) => c.id === characterId)?.name ?? "An unnamed figure";
+          logGameEvent(
+            payload.onMap
+              ? `${name} moves to ${Math.round(payload.x)}, ${Math.round(payload.y)} on ${activeMap.name}.`
+              : `${name} leaves the ${activeMap.name} map.`,
+          );
         })
         .catch((error: Error) => {
           toast.error(error.message);
           void queryClient.invalidateQueries({ queryKey: gameKeys.positions(activeMap.id) });
         });
     },
-    [activeMap, online, queryClient, refreshPendingCount],
+    [activeMap, characters.data, logGameEvent, online, queryClient, refreshPendingCount],
   );
 
   const storyMutation = useMutation({
