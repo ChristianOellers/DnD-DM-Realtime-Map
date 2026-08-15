@@ -28,7 +28,9 @@ describe("game ui store", () => {
   it("claims a card from the current offer", () => {
     useGameStore
       .getState()
-      .offerCards([{ title: "Ember Ward", effect: "Blocks one blow.", icon: "shield", theme: "ember" }]);
+      .offerCards([
+        { title: "Ember Ward", effect: "Blocks one blow.", icon: "shield", theme: "ember" },
+      ]);
     const claimed = useGameStore.getState().claimCard(0);
     expect(claimed?.title).toBe("Ember Ward");
     expect(useGameStore.getState().claimedCardIndex).toBe(0);

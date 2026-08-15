@@ -33,7 +33,11 @@ export function TopBar(props: TopBarProps) {
       <div className="min-w-0">
         <h1 className="truncate font-display text-base ember-text">{props.sessionName}</h1>
         <p className="text-[11px] text-muted-foreground">
-          {props.isGm ? "You hold the Game Master's seat" : props.gmName ? `GM: ${props.gmName}` : "No Game Master seated"}
+          {props.isGm
+            ? "You hold the Game Master's seat"
+            : props.gmName
+              ? `GM: ${props.gmName}`
+              : "No Game Master seated"}
         </p>
       </div>
 
@@ -65,19 +69,39 @@ export function TopBar(props: TopBarProps) {
           </span>
         )}
 
-        <Toggle pressed={props.gridStyle !== "none"} onPressedChange={props.onCycleGrid} aria-label={`Grid style: ${props.gridStyle}`}>
+        <Toggle
+          pressed={props.gridStyle !== "none"}
+          onPressedChange={props.onCycleGrid}
+          aria-label={`Grid style: ${props.gridStyle}`}
+        >
           <Grid3x3 className="h-4 w-4" aria-hidden />
         </Toggle>
-        <Toggle pressed={props.candleEnabled} onPressedChange={props.onToggleCandle} aria-label="Candle light">
+        <Toggle
+          pressed={props.candleEnabled}
+          onPressedChange={props.onToggleCandle}
+          aria-label="Candle light"
+        >
           <Flame className="h-4 w-4" aria-hidden />
         </Toggle>
         {props.isGm && (
-          <Toggle pressed={props.previewAsPlayer} onPressedChange={props.onTogglePreview} aria-label="Preview the players' view">
+          <Toggle
+            pressed={props.previewAsPlayer}
+            onPressedChange={props.onTogglePreview}
+            aria-label="Preview the players' view"
+          >
             <Eye className="h-4 w-4" aria-hidden />
           </Toggle>
         )}
-        <Toggle pressed={props.theme === "light"} onPressedChange={props.onToggleTheme} aria-label="Toggle light mode">
-          {props.theme === "dark" ? <Moon className="h-4 w-4" aria-hidden /> : <Sun className="h-4 w-4" aria-hidden />}
+        <Toggle
+          pressed={props.theme === "light"}
+          onPressedChange={props.onToggleTheme}
+          aria-label="Toggle light mode"
+        >
+          {props.theme === "dark" ? (
+            <Moon className="h-4 w-4" aria-hidden />
+          ) : (
+            <Sun className="h-4 w-4" aria-hidden />
+          )}
         </Toggle>
 
         {!props.isGm && (
@@ -87,8 +111,16 @@ export function TopBar(props: TopBarProps) {
           </Button>
         )}
 
-        <span className="ml-2 hidden text-xs text-muted-foreground xl:inline">{props.userName}</span>
-        <Button type="button" variant="ghost" size="icon" onClick={props.onSignOut} aria-label="Sign out">
+        <span className="ml-2 hidden text-xs text-muted-foreground xl:inline">
+          {props.userName}
+        </span>
+        <Button
+          type="button"
+          variant="ghost"
+          size="icon"
+          onClick={props.onSignOut}
+          aria-label="Sign out"
+        >
           <LogOut className="h-4 w-4" aria-hidden />
         </Button>
       </div>

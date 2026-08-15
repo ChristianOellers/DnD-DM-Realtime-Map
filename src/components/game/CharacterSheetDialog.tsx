@@ -74,7 +74,10 @@ export function CharacterSheetDialog({ character, onClose }: CharacterSheetDialo
                 </div>
                 <dl className="grid grid-cols-3 gap-1 text-center">
                   {Object.entries(scores).map(([key, value]) => (
-                    <div key={key} className="rounded-sm border border-panel-border bg-card/60 py-1">
+                    <div
+                      key={key}
+                      className="rounded-sm border border-panel-border bg-card/60 py-1"
+                    >
                       <dt className="text-[10px] uppercase tracking-widest text-muted-foreground">
                         {key}
                       </dt>

@@ -179,8 +179,7 @@
 /* --- Reusable atmosphere utilities --- */
 
 @utility panel {
-  background:
-    linear-gradient(180deg, oklch(1 0 0 / 3%), transparent 40%), var(--color-panel);
+  background: linear-gradient(180deg, oklch(1 0 0 / 3%), transparent 40%), var(--color-panel);
   border: 1px solid var(--color-panel-border);
   border-radius: var(--radius-lg);
   box-shadow: var(--shadow-relief);

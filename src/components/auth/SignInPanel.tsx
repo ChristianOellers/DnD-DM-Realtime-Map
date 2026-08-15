@@ -100,7 +100,11 @@ export function SignInPanel() {
             />
           </div>
           <Button type="submit" className="w-full" disabled={busy}>
-            {busy ? <Loader2 className="h-4 w-4 animate-spin" aria-hidden /> : <LogIn className="h-4 w-4" aria-hidden />}
+            {busy ? (
+              <Loader2 className="h-4 w-4 animate-spin" aria-hidden />
+            ) : (
+              <LogIn className="h-4 w-4" aria-hidden />
+            )}
             {mode === "signin" ? "Enter the table" : "Create a character sheet"}
           </Button>
         </form>

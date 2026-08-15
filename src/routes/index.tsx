@@ -42,7 +42,7 @@ import {
 } from "@/lib/game/queries";
 import { enqueue, flush, pending } from "@/lib/offline/queue";
 import { useGameStore } from "@/store/game-store";
-import type { CardDraft, FateRollResult, MapKey } from "@/lib/game/types";
+import type { CardDraft, CharacterPosition, FateRollResult, MapKey } from "@/lib/game/types";
 
 export const Route = createFileRoute("/")({
   head: () => ({
@@ -174,12 +174,14 @@ function GameConsole({ userId, userName }: GameConsoleProps) {
         onMap: next.onMap,
       };
 
-      queryClient.setQueryData(gameKeys.positions(activeMap.id), (rows: typeof positions.data) =>
-        (rows ?? []).map((row) =>
-          row.character_id === characterId
-            ? { ...row, x: payload.x, y: payload.y, on_map: payload.onMap }
-            : row,
-        ),
+      queryClient.setQueryData(
+        gameKeys.positions(activeMap.id),
+        (rows: CharacterPosition[] | undefined) =>
+          (rows ?? []).map((row) =>
+            row.character_id === characterId
+              ? { ...row, x: payload.x, y: payload.y, on_map: payload.onMap }
+              : row,
+          ),
       );
 
       if (!online) {
@@ -222,7 +224,8 @@ function GameConsole({ userId, userName }: GameConsoleProps) {
       if (result === "queued") toast.info("Chronicle saved offline. It will sync on reconnect.");
       else {
         toast.success("Chronicle saved.");
-        if (sessionId) void queryClient.invalidateQueries({ queryKey: gameKeys.chapters(sessionId) });
+        if (sessionId)
+          void queryClient.invalidateQueries({ queryKey: gameKeys.chapters(sessionId) });
       }
     },
     onError: (error: Error) => toast.error(error.message),
@@ -327,7 +330,10 @@ function GameConsole({ userId, userName }: GameConsoleProps) {
         </div>
 
         <div className="grid min-h-0 grid-rows-[1fr_auto] gap-3">
-          <section className="panel min-h-0 overflow-hidden p-2" aria-label={`${activeMap.name} map`}>
+          <section
+            className="panel min-h-0 overflow-hidden p-2"
+            aria-label={`${activeMap.name} map`}
+          >
             <MapBoard
               map={activeMap}
               characters={characterList}

@@ -46,7 +46,10 @@ function writeStorage(operations: QueuedOperation[]): void {
 }
 
 export function enqueue(operation: Omit<QueuedOperation, "queuedAt">): void {
-  const next = collapse([...readStorage(), { ...operation, queuedAt: Date.now() } as QueuedOperation]);
+  const next = collapse([
+    ...readStorage(),
+    { ...operation, queuedAt: Date.now() } as QueuedOperation,
+  ]);
   writeStorage(next);
 }
 

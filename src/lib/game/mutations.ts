@@ -70,17 +70,12 @@ export function cellsAround(x: number, y: number, cols: number, rows: number): [
   return cells;
 }
 
-export async function revealFog(
-  mapId: string,
-  cells: [number, number][],
-): Promise<void> {
+export async function revealFog(mapId: string, cells: [number, number][]): Promise<void> {
   if (cells.length === 0) return;
-  const { error } = await supabase
-    .from("fog_cells")
-    .upsert(
-      cells.map(([cx, cy]) => ({ map_id: mapId, cx, cy })),
-      { onConflict: "map_id,cx,cy", ignoreDuplicates: true },
-    );
+  const { error } = await supabase.from("fog_cells").upsert(
+    cells.map(([cx, cy]) => ({ map_id: mapId, cx, cy })),
+    { onConflict: "map_id,cx,cy", ignoreDuplicates: true },
+  );
   if (error) throw new Error(error.message);
 }
 
@@ -116,11 +111,7 @@ export async function sendChatMessage(
   if (error) throw new Error(error.message);
 }
 
-export async function addCard(
-  sessionId: string,
-  userId: string,
-  draft: CardDraft,
-): Promise<void> {
+export async function addCard(sessionId: string, userId: string, draft: CardDraft): Promise<void> {
   const value = cardSchema.parse(draft);
   const { error } = await supabase.from("cards").insert({
     session_id: sessionId,

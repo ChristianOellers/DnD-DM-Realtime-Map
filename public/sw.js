@@ -12,7 +12,9 @@ self.addEventListener("activate", (event) => {
   event.waitUntil(
     caches
       .keys()
-      .then((keys) => Promise.all(keys.filter((key) => key !== CACHE).map((key) => caches.delete(key)))),
+      .then((keys) =>
+        Promise.all(keys.filter((key) => key !== CACHE).map((key) => caches.delete(key))),
+      ),
   );
   self.clients.claim();
 });
@@ -50,7 +52,10 @@ self.addEventListener("fetch", (event) => {
       (cached) =>
         cached ||
         fetch(request).then((response) => {
-          if (response.ok && (url.pathname.startsWith("/_build") || url.pathname.startsWith("/assets"))) {
+          if (
+            response.ok &&
+            (url.pathname.startsWith("/_build") || url.pathname.startsWith("/assets"))
+          ) {
             const copy = response.clone();
             caches.open(CACHE).then((cache) => cache.put(request, copy));
           }

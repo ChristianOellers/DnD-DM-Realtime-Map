@@ -111,7 +111,11 @@ export function StoryPanel({ chapters, isGm, online, saving, onSave }: StoryPane
             onClick={() => onSave(draft)}
             className="w-full"
           >
-            {online ? <Save className="h-4 w-4" aria-hidden /> : <WifiOff className="h-4 w-4" aria-hidden />}
+            {online ? (
+              <Save className="h-4 w-4" aria-hidden />
+            ) : (
+              <WifiOff className="h-4 w-4" aria-hidden />
+            )}
             {online ? "Save chronicle" : "Save offline (syncs later)"}
           </Button>
         </div>

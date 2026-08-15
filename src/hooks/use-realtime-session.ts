@@ -21,7 +21,12 @@ export function useRealtimeSession(sessionId: string | undefined, mapIds: string
       .channel(`session:${sessionId}`)
       .on(
         "postgres_changes",
-        { event: "*", schema: "public", table: "chat_messages", filter: `session_id=eq.${sessionId}` },
+        {
+          event: "*",
+          schema: "public",
+          table: "chat_messages",
+          filter: `session_id=eq.${sessionId}`,
+        },
         () => queryClient.invalidateQueries({ queryKey: gameKeys.chat(sessionId) }),
       )
       .on(
@@ -31,7 +36,12 @@ export function useRealtimeSession(sessionId: string | undefined, mapIds: string
       )
       .on(
         "postgres_changes",
-        { event: "*", schema: "public", table: "story_chapters", filter: `session_id=eq.${sessionId}` },
+        {
+          event: "*",
+          schema: "public",
+          table: "story_chapters",
+          filter: `session_id=eq.${sessionId}`,
+        },
         () => queryClient.invalidateQueries({ queryKey: gameKeys.chapters(sessionId) }),
       )
       .on(
@@ -39,9 +49,13 @@ export function useRealtimeSession(sessionId: string | undefined, mapIds: string
         { event: "*", schema: "public", table: "game_sessions", filter: `id=eq.${sessionId}` },
         () => queryClient.invalidateQueries({ queryKey: gameKeys.session }),
       )
-      .on("postgres_changes", { event: "*", schema: "public", table: "character_positions" }, () => {
-        for (const id of ids) queryClient.invalidateQueries({ queryKey: gameKeys.positions(id) });
-      })
+      .on(
+        "postgres_changes",
+        { event: "*", schema: "public", table: "character_positions" },
+        () => {
+          for (const id of ids) queryClient.invalidateQueries({ queryKey: gameKeys.positions(id) });
+        },
+      )
       .on("postgres_changes", { event: "*", schema: "public", table: "fog_cells" }, () => {
         for (const id of ids) queryClient.invalidateQueries({ queryKey: gameKeys.fog(id) });
       })

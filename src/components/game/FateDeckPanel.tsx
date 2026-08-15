@@ -41,8 +41,14 @@ export function FateDeckPanel({
     if (cardElement && deckElement) {
       const from = cardElement.getBoundingClientRect();
       const to = deckElement.getBoundingClientRect();
-      cardElement.style.setProperty("--fly-x", `${to.left + to.width / 2 - (from.left + from.width / 2)}px`);
-      cardElement.style.setProperty("--fly-y", `${to.top + to.height / 2 - (from.top + from.height / 2)}px`);
+      cardElement.style.setProperty(
+        "--fly-x",
+        `${to.left + to.width / 2 - (from.left + from.width / 2)}px`,
+      );
+      cardElement.style.setProperty(
+        "--fly-y",
+        `${to.top + to.height / 2 - (from.top + from.height / 2)}px`,
+      );
     }
     setFlyingIndex(index);
     window.setTimeout(() => {
@@ -63,8 +69,14 @@ export function FateDeckPanel({
           className="relative flex h-10 w-8 items-center justify-center rounded-sm border border-panel-border bg-card"
           title={`${deck.length} cards in the deck`}
         >
-          <span aria-hidden className="absolute inset-0 -rotate-6 rounded-sm border border-panel-border bg-card/70" />
-          <span aria-hidden className="absolute inset-0 rotate-3 rounded-sm border border-panel-border bg-card/80" />
+          <span
+            aria-hidden
+            className="absolute inset-0 -rotate-6 rounded-sm border border-panel-border bg-card/70"
+          />
+          <span
+            aria-hidden
+            className="absolute inset-0 rotate-3 rounded-sm border border-panel-border bg-card/80"
+          />
           <Layers className="relative h-4 w-4 text-primary" aria-hidden />
           <span className="absolute -bottom-2 -right-2 rounded-full bg-primary px-1.5 text-[10px] font-semibold text-primary-foreground">
             {deck.length}
@@ -134,7 +146,10 @@ export function FateDeckPanel({
                       background: `linear-gradient(160deg, ${accent}22, var(--card))`,
                     }}
                   >
-                    <span className="flex items-center gap-2 font-display text-xs" style={{ color: accent }}>
+                    <span
+                      className="flex items-center gap-2 font-display text-xs"
+                      style={{ color: accent }}
+                    >
                       <Icon className="h-4 w-4" aria-hidden />
                       {card.title}
                     </span>
