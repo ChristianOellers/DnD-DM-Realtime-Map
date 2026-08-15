@@ -147,11 +147,11 @@ export function FateDeckPanel({
                     }}
                   >
                     <span
-                      className="flex items-center gap-2 font-display text-xs"
+                      className="flex items-start gap-2 font-display text-xs leading-tight"
                       style={{ color: accent }}
                     >
-                      <Icon className="h-4 w-4" aria-hidden />
-                      {card.title}
+                      <Icon className="mt-0.5 h-4 w-4 shrink-0" aria-hidden />
+                      <span className="min-w-0 break-words">{card.title}</span>
                     </span>
                     <span className="text-[11px] leading-snug text-muted-foreground">
                       {card.effect}
