@@ -94,16 +94,15 @@ export function MapBoard({
 
   const handlePointerMove = useCallback(
     (event: React.PointerEvent<HTMLDivElement>) => {
-      const canvas = canvasRef.current;
-      if (!canvas) return;
-      const rect = canvas.getBoundingClientRect();
-      sceneRef.current?.setCandle(
-        (event.clientX - rect.left) / rect.width,
-        (event.clientY - rect.top) / rect.height,
-        candleEnabled,
-      );
+      const scene = sceneRef.current;
+      if (!scene) return;
+      // Project the pointer onto the ground plane so the candle follows the
+      // cursor in world space (shader uv.y runs bottom-up, screen y top-down).
+      const grid = scene.clientToGrid(event.clientX, event.clientY);
+      if (!grid) return;
+      scene.setCandle(grid.x / map.cols, 1 - grid.y / map.rows, candleEnabled);
     },
-    [candleEnabled],
+    [candleEnabled, map.cols, map.rows],
   );
 
   useEffect(() => {

@@ -41,7 +41,10 @@ export function StoryPanel({ chapters, isGm, online, saving, onSave }: StoryPane
     draft.body !== active.body;
 
   return (
-    <section className="panel flex min-h-0 flex-col gap-3 p-4" aria-labelledby="story-heading">
+    <section
+      className="panel flex min-h-0 flex-col gap-3 overflow-hidden p-4"
+      aria-labelledby="story-heading"
+    >
       <header className="flex items-baseline justify-between gap-2">
         <h2 id="story-heading" className="panel-heading flex items-center gap-2">
           <BookOpen className="h-3.5 w-3.5" aria-hidden />
@@ -54,7 +57,7 @@ export function StoryPanel({ chapters, isGm, online, saving, onSave }: StoryPane
       <div className="rule-ornament" />
 
       {isGm ? (
-        <div className="flex min-h-0 flex-col gap-3">
+        <div className="flex min-h-0 flex-1 flex-col gap-3 overflow-y-auto pr-1">
           <div className="space-y-1">
             <Label htmlFor="chapter-title" className="panel-heading">
               Chapter title
@@ -102,14 +105,14 @@ export function StoryPanel({ chapters, isGm, online, saving, onSave }: StoryPane
               value={draft.body}
               maxLength={6000}
               onChange={(event) => setDraft({ ...draft, body: event.target.value })}
-              className="min-h-40 flex-1 resize-none font-script text-sm leading-relaxed"
+              className="min-h-24 flex-1 resize-none font-script text-sm leading-relaxed"
             />
           </div>
           <Button
             type="button"
             disabled={!dirty || saving}
             onClick={() => onSave(draft)}
-            className="w-full"
+            className="w-full shrink-0"
           >
             {online ? (
               <Save className="h-4 w-4" aria-hidden />

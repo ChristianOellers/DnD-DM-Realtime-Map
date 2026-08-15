@@ -27,6 +27,7 @@ import {
   saveChapter,
   saveCharacterPosition,
   sendChatMessage,
+  logEvent,
   type StoryInput,
 } from "@/lib/game/mutations";
 import {
@@ -132,6 +133,18 @@ function GameConsole({ userId, userName }: GameConsoleProps) {
 
   const isGm = sessionResult.data?.gm_user_id === userId;
 
+  // Shared, persistent memory of the session: the GM's client writes a log
+  // line into the table chat whenever something noteworthy happens.
+  const logGameEvent = useCallback(
+    (body: string) => {
+      if (!isGm || !sessionId || !online) return;
+      void logEvent(sessionId, "Chronicle", body)
+        .then(() => queryClient.invalidateQueries({ queryKey: gameKeys.chat(sessionId) }))
+        .catch(() => undefined);
+    },
+    [isGm, online, queryClient, sessionId],
+  );
+
   const positionMap = useMemo<Record<string, BoardPosition>>(() => {
     const entries: Record<string, BoardPosition> = {};
     for (const row of positions.data ?? []) {
@@ -201,13 +214,20 @@ function GameConsole({ userId, userName }: GameConsoleProps) {
         })
         .then(() => {
           void queryClient.invalidateQueries({ queryKey: gameKeys.fog(activeMap.id) });
+          const name =
+            characters.data?.find((c) => c.id === characterId)?.name ?? "An unnamed figure";
+          logGameEvent(
+            payload.onMap
+              ? `${name} moves to ${Math.round(payload.x)}, ${Math.round(payload.y)} on ${activeMap.name}.`
+              : `${name} leaves the ${activeMap.name} map.`,
+          );
         })
         .catch((error: Error) => {
           toast.error(error.message);
           void queryClient.invalidateQueries({ queryKey: gameKeys.positions(activeMap.id) });
         });
     },
-    [activeMap, online, queryClient, refreshPendingCount],
+    [activeMap, characters.data, logGameEvent, online, queryClient, refreshPendingCount],
   );
 
   const storyMutation = useMutation({
@@ -220,12 +240,13 @@ function GameConsole({ userId, userName }: GameConsoleProps) {
       await saveChapter(input);
       return "saved" as const;
     },
-    onSuccess: (result) => {
+    onSuccess: (result, input) => {
       if (result === "queued") toast.info("Chronicle saved offline. It will sync on reconnect.");
       else {
         toast.success("Chronicle saved.");
         if (sessionId)
           void queryClient.invalidateQueries({ queryKey: gameKeys.chapters(sessionId) });
+        logGameEvent(`The chronicle turns: “${input.title}” — ${input.progress}% complete.`);
       }
     },
     onError: (error: Error) => toast.error(error.message),
@@ -246,6 +267,9 @@ function GameConsole({ userId, userName }: GameConsoleProps) {
     onSuccess: (result) => {
       setLastRoll(result);
       store().offerCards(result.cards);
+      logGameEvent(
+        `Fate dice: d20 → ${result.roll}. ${result.narration ?? "Nothing magical stirs."}`,
+      );
     },
     onError: () => toast.error("The dice would not answer."),
   });
@@ -255,10 +279,13 @@ function GameConsole({ userId, userName }: GameConsoleProps) {
       if (!sessionId) return;
       store().clearOfferedCards();
       void addCard(sessionId, userId, card)
-        .then(() => queryClient.invalidateQueries({ queryKey: gameKeys.cards(sessionId) }))
+        .then(() => {
+          void queryClient.invalidateQueries({ queryKey: gameKeys.cards(sessionId) });
+          logGameEvent(`The deck answers: “${card.title}” — ${card.effect}`);
+        })
         .catch((error: Error) => toast.error(error.message));
     },
-    [queryClient, sessionId, store, userId],
+    [logGameEvent, queryClient, sessionId, store, userId],
   );
 
   const sendMessage = useCallback(

@@ -126,19 +126,19 @@ export function FateDeckPanel({
       {offeredCards.length > 0 && (
         <div>
           <p className="panel-heading mb-2">Choose the omen that comes to pass</p>
-          <ul className="grid grid-cols-3 gap-2 [grid-template-rows:auto_1fr]">
+          <ul className="grid grid-cols-3 items-stretch gap-2">
             {offeredCards.map((card, index) => {
               const Icon = cardIcon(card.icon);
               const accent = CARD_THEME_TOKEN[card.theme as CardTheme] ?? "var(--ember)";
               return (
-                <li key={card.title} className="grid grid-rows-subgrid row-span-2">
+                <li key={card.title} className="flex min-w-0">
                   <button
                     type="button"
                     ref={(node) => {
                       cardRefs.current[index] = node;
                     }}
                     onClick={() => choose(index)}
-                    className={`grid grid-rows-subgrid row-span-2 gap-2 rounded-md border p-3 text-left transition-transform hover:-translate-y-1 ${
+                    className={`flex w-full min-w-0 flex-col gap-2 overflow-hidden rounded-md border p-3 text-left transition-transform hover:-translate-y-1 ${
                       flyingIndex === index ? "card-flying" : ""
                     }`}
                     style={{
@@ -147,11 +147,11 @@ export function FateDeckPanel({
                     }}
                   >
                     <span
-                      className="flex items-center gap-2 font-display text-xs"
+                      className="flex items-start gap-2 font-display text-xs leading-tight"
                       style={{ color: accent }}
                     >
-                      <Icon className="h-4 w-4" aria-hidden />
-                      {card.title}
+                      <Icon className="mt-0.5 h-4 w-4 shrink-0" aria-hidden />
+                      <span className="min-w-0 break-words">{card.title}</span>
                     </span>
                     <span className="text-[11px] leading-snug text-muted-foreground">
                       {card.effect}

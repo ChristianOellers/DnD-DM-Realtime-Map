@@ -111,6 +111,22 @@ export async function sendChatMessage(
   if (error) throw new Error(error.message);
 }
 
+/**
+ * Game log entry written by the Game Master's client so the table keeps a
+ * shared, persistent memory of what happened. Guarded by RLS (`kind = 'log'`).
+ */
+export async function logEvent(sessionId: string, authorName: string, body: string): Promise<void> {
+  const value = chatSchema.parse({ body: body.trim().slice(0, 500) });
+  const { error } = await supabase.from("chat_messages").insert({
+    session_id: sessionId,
+    user_id: null,
+    author_name: authorName,
+    body: value.body,
+    kind: "log",
+  });
+  if (error) throw new Error(error.message);
+}
+
 export async function addCard(sessionId: string, userId: string, draft: CardDraft): Promise<void> {
   const value = cardSchema.parse(draft);
   const { error } = await supabase.from("cards").insert({
