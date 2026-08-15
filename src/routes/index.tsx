@@ -27,6 +27,7 @@ import {
   saveChapter,
   saveCharacterPosition,
   sendChatMessage,
+  logEvent,
   type StoryInput,
 } from "@/lib/game/mutations";
 import {
@@ -131,6 +132,18 @@ function GameConsole({ userId, userName }: GameConsoleProps) {
   }, [theme]);
 
   const isGm = sessionResult.data?.gm_user_id === userId;
+
+  // Shared, persistent memory of the session: the GM's client writes a log
+  // line into the table chat whenever something noteworthy happens.
+  const logGameEvent = useCallback(
+    (body: string) => {
+      if (!isGm || !sessionId || !online) return;
+      void logEvent(sessionId, "Chronicle", body)
+        .then(() => queryClient.invalidateQueries({ queryKey: gameKeys.chat(sessionId) }))
+        .catch(() => undefined);
+    },
+    [isGm, online, queryClient, sessionId],
+  );
 
   const positionMap = useMemo<Record<string, BoardPosition>>(() => {
     const entries: Record<string, BoardPosition> = {};
