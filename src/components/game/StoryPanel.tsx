@@ -41,7 +41,10 @@ export function StoryPanel({ chapters, isGm, online, saving, onSave }: StoryPane
     draft.body !== active.body;
 
   return (
-    <section className="panel flex min-h-0 flex-col gap-3 p-4" aria-labelledby="story-heading">
+    <section
+      className="panel flex min-h-0 flex-col gap-3 overflow-hidden p-4"
+      aria-labelledby="story-heading"
+    >
       <header className="flex items-baseline justify-between gap-2">
         <h2 id="story-heading" className="panel-heading flex items-center gap-2">
           <BookOpen className="h-3.5 w-3.5" aria-hidden />

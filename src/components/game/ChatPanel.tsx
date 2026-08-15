@@ -32,7 +32,7 @@ export function ChatPanel({ messages, currentUserId, disabled, onSend }: ChatPan
       <ul ref={listRef} className="min-h-0 flex-1 space-y-2 overflow-y-auto pr-1 text-sm">
         {messages.map((message) => (
           <li key={message.id}>
-            {message.kind === "system" ? (
+            {message.kind === "system" || message.kind === "log" ? (
               <p className="font-script text-xs italic text-muted-foreground">{message.body}</p>
             ) : (
               <p>
