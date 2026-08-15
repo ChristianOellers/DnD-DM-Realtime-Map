@@ -116,7 +116,7 @@ export async function sendChatMessage(
  * shared, persistent memory of what happened. Guarded by RLS (`kind = 'log'`).
  */
 export async function logEvent(sessionId: string, authorName: string, body: string): Promise<void> {
-  const value = chatSchema.parse({ body });
+  const value = chatSchema.parse({ body: body.trim().slice(0, 500) });
   const { error } = await supabase.from("chat_messages").insert({
     session_id: sessionId,
     user_id: null,
