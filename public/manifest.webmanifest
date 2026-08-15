@@ -1,0 +1,16 @@
+{
+  "name": "Ashfall — Game Master Console",
+  "short_name": "Ashfall",
+  "description": "A desktop Game Master console for the Ashfall Compact: 3D tabletop, fog of war, chronicle and live table chat.",
+  "start_url": "/",
+  "display": "standalone",
+  "background_color": "#151210",
+  "theme_color": "#c9a227",
+  "icons": [
+    {
+      "src": "/favicon.ico",
+      "sizes": "48x48",
+      "type": "image/x-icon"
+    }
+  ]
+}
