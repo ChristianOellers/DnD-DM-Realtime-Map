@@ -6,7 +6,11 @@ import { Loader2 } from "lucide-react";
 import { toast } from "sonner";
 
 import { supabase } from "@/integrations/supabase/client";
-import { SignInPanel } from "@/components/auth/SignInPanel";
+// NOTE TO SELF: auth is intentionally disabled for this public tech demo.
+// The real sign-in UI is kept in `SignInPanel.tsx` — restore by re-enabling
+// the import below and swapping `<NamePanel />` back to `<SignInPanel />`.
+// import { SignInPanel } from "@/components/auth/SignInPanel";
+import { NamePanel } from "@/components/auth/NamePanel";
 import { CharacterRoster } from "@/components/game/CharacterRoster";
 import { CharacterSheetDialog } from "@/components/game/CharacterSheetDialog";
 import { ChatPanel } from "@/components/game/ChatPanel";
