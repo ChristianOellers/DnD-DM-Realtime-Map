@@ -82,7 +82,8 @@ function ConsoleRoute() {
     );
   }
 
-  if (!session || !user) return <SignInPanel />;
+  // Auth disabled on purpose (tech demo): name-only anonymous entry.
+  if (!session || !user) return <NamePanel />;
 
   return (
     <DesktopOnlyGate>
