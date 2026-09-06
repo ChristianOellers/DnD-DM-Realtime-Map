@@ -435,7 +435,7 @@ export type Database = {
     }
     Functions: {
       claim_gm: {
-        Args: { _session_id: string }
+        Args: { _session_id: string; _user_id: string }
         Returns: {
           created_at: string
           gm_claimed_at: string | null

@@ -15,6 +15,13 @@
       "when": 1788711974319,
       "tag": "0001_disable_chat_messages_table_access",
       "breakpoints": true
+    },
+    {
+      "idx": 2,
+      "version": "7",
+      "when": 1788712547686,
+      "tag": "0002_harden_security_definer_functions",
+      "breakpoints": true
     }
   ]
 }
