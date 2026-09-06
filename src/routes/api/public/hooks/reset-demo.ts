@@ -24,7 +24,7 @@ export const Route = createFileRoute("/api/public/hooks/reset-demo")({
   server: {
     handlers: {
       POST: async ({ request }) => {
-        const expected = process.env["DEMO_RESET_SECRET"];
+        const expected = process.env["DEMO_RESET_TOKEN"];
         const provided = request.headers.get("x-reset-secret");
 
         if (!expected || !provided || !timingSafeEqual(provided, expected)) {
