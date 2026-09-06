@@ -1,7 +1,7 @@
 import { createFileRoute } from "@tanstack/react-router";
 
 /**
- * Hourly demo reset hook.
+ * Daily demo reset hook.
  *
  * Called by a scheduled job. Clears volatile demo data:
  *  - chat_messages: fully emptied
