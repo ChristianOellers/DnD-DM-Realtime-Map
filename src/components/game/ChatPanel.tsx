@@ -59,16 +59,18 @@ export function ChatPanel({ messages, currentUserId, disabled, onSend }: ChatPan
             )}
           </li>
         ))}
-      </ul>
+        </ul>
+      </div>
 
       <form
         className="mt-3 flex gap-2"
         onSubmit={(event) => {
           event.preventDefault();
-          const body = value.trim();
-          if (!body) return;
-          onSend(body);
-          setValue("");
+          // Disabled for the demo — never persists. Kept for reference:
+          // const body = value.trim();
+          // if (!body) return;
+          // onSend(body);
+          // setValue("");
         }}
       >
         <label htmlFor="chat-input" className="sr-only">
@@ -78,11 +80,11 @@ export function ChatPanel({ messages, currentUserId, disabled, onSend }: ChatPan
           id="chat-input"
           value={value}
           maxLength={500}
-          disabled={disabled}
-          placeholder={disabled ? "Reconnecting…" : "Speak to the table…"}
+          disabled
+          placeholder="Chat disabled for this demo"
           onChange={(event) => setValue(event.target.value)}
         />
-        <Button type="submit" size="icon" disabled={disabled} aria-label="Send message">
+        <Button type="submit" size="icon" disabled aria-label="Send message (disabled for demo)">
           <Send className="h-4 w-4" aria-hidden />
         </Button>
       </form>
