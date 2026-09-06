@@ -24,17 +24,17 @@ export const Route = createFileRoute("/api/public/hooks/reset-demo")({
   server: {
     handlers: {
       POST: async ({ request }) => {
-        const expected = process.env["DEMO_RESET_TOKEN"];
+        const { supabaseAdmin } = await import("@/integrations/supabase/client.server");
+
+        const { data: expected, error: settingError } = await supabaseAdmin.rpc("get_demo_reset_token");
         const provided = request.headers.get("x-reset-secret");
 
-        if (!expected || !provided || !timingSafeEqual(provided, expected)) {
+        if (settingError || !expected || !provided || !timingSafeEqual(provided, expected)) {
           return new Response(JSON.stringify({ error: "Unauthorized" }), {
             status: 401,
             headers: { "Content-Type": "application/json" },
           });
         }
-
-        const { supabaseAdmin } = await import("@/integrations/supabase/client.server");
 
         const chat = await supabaseAdmin.from("chat_messages").delete().neq("id", ALL_ROWS);
         const profiles = await supabaseAdmin.from("profiles").delete().neq("id", ALL_ROWS);
