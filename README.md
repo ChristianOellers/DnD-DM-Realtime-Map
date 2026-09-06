@@ -1,6 +1,7 @@
 # DnD Realtime map - POC
 
-Vibe coding tech demo to explore new tech stacks.
+Vibe coding tech demo to explore a variety of tech stacks in a single place.
+All has been 'force-fitted' together and doesn't make much architectural sense, except saving time.
 
 ---
 
