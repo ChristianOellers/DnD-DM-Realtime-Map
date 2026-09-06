@@ -149,9 +149,8 @@ export async function addCard(sessionId: string, userId: string, draft: CardDraf
   if (error) throw new Error(error.message);
 }
 
-/** Claiming the GM role goes through a SECURITY DEFINER function, never a direct UPDATE. */
+/** Claiming the GM role goes through a trusted server function, never a direct UPDATE. */
 export async function claimGameMaster(sessionId: string): Promise<GameSession> {
-  const { data, error } = await supabase.rpc("claim_gm", { _session_id: sessionId });
-  if (error) throw new Error(error.message);
-  return data as unknown as GameSession;
+  const { claimGameMasterSeat } = await import("./gm.functions");
+  return claimGameMasterSeat({ data: { sessionId } });
 }
