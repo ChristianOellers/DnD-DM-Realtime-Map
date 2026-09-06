@@ -30,3 +30,8 @@ dist-ssr
 *.njsproj
 *.sln
 *.sw?
+
+# Local environment (values are project-specific; see .env.example)
+.env
+.env.local
+.env.*.local
