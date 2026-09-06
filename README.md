@@ -1,7 +1,20 @@
-# DnD Realtime map - POC
+# Web Stack Tech Demo – DnD map
+
+[![DnD](teaser.png)](https://ccn-test-dnd-dm-map.lovable.app)
 
 Vibe coding tech demo to explore a variety of tech stacks in a single place.
-All has been 'force-fitted' together and doesn't make much architectural sense, except saving time.
+'Force-fitting' it together to save time, instead of having to create individual projects and use cases.
+
+Try it live: [LOVABLE](https://ccn-test-dnd-dm-map.lovable.app)
+
+---
+
+## Mechanics
+
+Not really much to do/ see – most is not working properly.
+The focus is on the tech stack behind the scenes.
+
+> Any persistent data is reset regularly. Do not store anything important here.
 
 ---
 
@@ -23,17 +36,27 @@ Lovable defaults, with:
 - **PWA/Offline:** Service Worker + local persistence + synchronization
 - **Drag & Drop:** Modern drag-and-drop library
 - **Testing:** Vitest
-- **Security:** OWASP + BSI + NIST + ENISA-aligned practices
-- **Deployment/Platform:** Lovable runtime/editor
-- **Language:** Strict TypeScript
-- **Documentation:** `RESULT.MD`
+
+Documentation: `RESULT.MD`
 
 ---
 
 ## Disclaimer
 
-> [!WARNING]
-> 99% AI generated, 1% effort
+> [!TIP]
+> 98% AI generated, 1% effort – 1% love
 
 Nothing has been adjusted or polished; nor will be.
 This is about stack integration _only_, paired with a randomly chosen visual demo.
+
+---
+
+## Fan goodies
+
+In case you urgently need it for something.
+
+![Badge](slop-award.png)
+
+---
+
+_Code by Lovable. Slop award by ChatGPT. README by human._
