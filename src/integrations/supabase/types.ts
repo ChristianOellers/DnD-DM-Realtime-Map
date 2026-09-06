@@ -194,6 +194,21 @@ export type Database = {
           },
         ]
       }
+      demo_config: {
+        Row: {
+          id: number
+          reset_token: string
+        }
+        Insert: {
+          id?: number
+          reset_token: string
+        }
+        Update: {
+          id?: number
+          reset_token?: string
+        }
+        Relationships: []
+      }
       effects: {
         Row: {
           character_id: string
@@ -451,6 +466,7 @@ export type Database = {
           isSetofReturn: false
         }
       }
+      get_demo_reset_token: { Args: never; Returns: string }
       is_gm: { Args: { _session_id: string }; Returns: boolean }
     }
     Enums: {
