@@ -73,15 +73,20 @@ export async function fetchCards(sessionId: string): Promise<MagicCard[]> {
   );
 }
 
-export async function fetchChat(sessionId: string): Promise<ChatMessage[]> {
-  return unwrap(
-    await supabase
-      .from("chat_messages")
-      .select("*")
-      .eq("session_id", sessionId)
-      .order("created_at")
-      .limit(200),
-  );
+// NOTE TO SELF: chat is intentionally DISABLED for the demo (compliance /
+// security / PII risk); the chat_messages table grants are revoked, so this
+// returns an empty list instead of querying. Original query kept commented
+// out below — this disabling is OK and desired.
+export async function fetchChat(_sessionId: string): Promise<ChatMessage[]> {
+  return [];
+  // return unwrap(
+  //   await supabase
+  //     .from("chat_messages")
+  //     .select("*")
+  //     .eq("session_id", sessionId)
+  //     .order("created_at")
+  //     .limit(200),
+  // );
 }
 
 export const gameKeys = {

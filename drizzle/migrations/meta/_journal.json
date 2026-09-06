@@ -8,6 +8,13 @@
       "when": 1788711809234,
       "tag": "0000_harden_grants_and_gm_seat",
       "breakpoints": true
+    },
+    {
+      "idx": 1,
+      "version": "7",
+      "when": 1788711974319,
+      "tag": "0001_disable_chat_messages_table_access",
+      "breakpoints": true
     }
   ]
 }

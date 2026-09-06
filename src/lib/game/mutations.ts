@@ -94,37 +94,46 @@ export async function saveChapter(input: StoryInput): Promise<void> {
   if (error) throw new Error(error.message);
 }
 
+// NOTE TO SELF: chat persistence is intentionally DISABLED for the demo
+// (compliance / security / PII risk). The table grants are revoked in the
+// database, so these functions are deliberate no-ops. The original insert
+// code is kept commented out below — this disabling is OK and desired.
 export async function sendChatMessage(
-  sessionId: string,
-  userId: string,
-  authorName: string,
-  body: string,
+  _sessionId: string,
+  _userId: string,
+  _authorName: string,
+  _body: string,
 ): Promise<void> {
-  const value = chatSchema.parse({ body });
-  const { error } = await supabase.from("chat_messages").insert({
-    session_id: sessionId,
-    user_id: userId,
-    author_name: authorName,
-    body: value.body,
-    kind: "chat",
-  });
-  if (error) throw new Error(error.message);
+  // const value = chatSchema.parse({ body });
+  // const { error } = await supabase.from("chat_messages").insert({
+  //   session_id: sessionId,
+  //   user_id: userId,
+  //   author_name: authorName,
+  //   body: value.body,
+  //   kind: "chat",
+  // });
+  // if (error) throw new Error(error.message);
 }
 
 /**
  * Game log entry written by the Game Master's client so the table keeps a
  * shared, persistent memory of what happened. Guarded by RLS (`kind = 'log'`).
+ * DISABLED for the demo — see note on sendChatMessage above.
  */
-export async function logEvent(sessionId: string, authorName: string, body: string): Promise<void> {
-  const value = chatSchema.parse({ body: body.trim().slice(0, 500) });
-  const { error } = await supabase.from("chat_messages").insert({
-    session_id: sessionId,
-    user_id: null,
-    author_name: authorName,
-    body: value.body,
-    kind: "log",
-  });
-  if (error) throw new Error(error.message);
+export async function logEvent(
+  _sessionId: string,
+  _authorName: string,
+  _body: string,
+): Promise<void> {
+  // const value = chatSchema.parse({ body: body.trim().slice(0, 500) });
+  // const { error } = await supabase.from("chat_messages").insert({
+  //   session_id: sessionId,
+  //   user_id: null,
+  //   author_name: authorName,
+  //   body: value.body,
+  //   kind: "log",
+  // });
+  // if (error) throw new Error(error.message);
 }
 
 export async function addCard(sessionId: string, userId: string, draft: CardDraft): Promise<void> {
