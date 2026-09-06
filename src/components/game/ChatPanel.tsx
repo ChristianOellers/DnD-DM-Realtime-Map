@@ -29,7 +29,18 @@ export function ChatPanel({ messages, currentUserId, disabled, onSend }: ChatPan
       </h2>
       <div className="rule-ornament my-3" />
 
-      <ul ref={listRef} className="min-h-0 flex-1 space-y-2 overflow-y-auto pr-1 text-sm">
+      {/* NOTE TO SELF: chat is intentionally DISABLED for the demo
+          (compliance / security / PII risk). The panel UI stays visible, but
+          messages are never loaded or saved, the composer is disabled, and a
+          DEMO marker is overlaid. This disabling is OK and desired. */}
+      <div className="relative min-h-0 flex-1">
+        <span
+          aria-hidden
+          className="pointer-events-none absolute inset-0 z-10 flex items-center justify-center font-display text-4xl tracking-[0.5em] text-muted-foreground/40"
+        >
+          DEMO
+        </span>
+        <ul ref={listRef} className="h-full space-y-2 overflow-y-auto pr-1 text-sm">
         {messages.map((message) => (
           <li key={message.id}>
             {message.kind === "system" || message.kind === "log" ? (
