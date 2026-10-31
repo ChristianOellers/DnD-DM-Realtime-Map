@@ -36,6 +36,13 @@
       "when": 1793448833548,
       "tag": "0004_lock_down_profiles_and_chat_reads",
       "breakpoints": true
+    },
+    {
+      "idx": 5,
+      "version": "7",
+      "when": 1793448917778,
+      "tag": "0005_scope_child_reads_to_parent_visibility",
+      "breakpoints": true
     }
   ]
 }
